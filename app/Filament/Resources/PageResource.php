@@ -18,12 +18,14 @@ use Filament\Forms\Components\Card;
 use Filament\Tables\Filters\Filter;
 use Filament\Forms\Components\DatePicker;
 use Illuminate\Support\Str;
+use Filament\Tables\Filters\SelectFilter;
+use Mohamedsabil83\FilamentFormsTinyeditor\Components\TinyEditor;
 
 class PageResource extends Resource
 {
     protected static ?string $model = Page::class;
     protected static ?string $recordTitleAttribute = 'title';
-
+    protected static ?string $navigationGroup = 'Menu';
     protected static ?string $navigationIcon = 'heroicon-o-collection';
 
     public static function form(Form $form): Form
@@ -48,7 +50,9 @@ class PageResource extends Resource
                                 $set('is_slug_changed_manually', true);
                             })
                             ->required()->unique(ignoreRecord: true),
-                        Forms\Components\RichEditor::make('content')->required(),
+                        TinyEditor::make('content')->required(),
+                        Forms\Components\TextInput::make('meta_title'),
+                        Forms\Components\TextInput::make('meta_description'),
                         Forms\Components\Toggle::make('is_published')->label('Is Published')->required(),
                     ])
             ]);
@@ -64,8 +68,14 @@ class PageResource extends Resource
                 Tables\Columns\IconColumn::make('is_published')->boolean()->sortable(),
             ])
             ->filters([
-                Filter::make('is_published')
-                    ->query(fn (Builder $query): Builder => $query->where('is_published', 1)),
+            Filter::make('is_published')->toggle()->query(fn (Builder $query): Builder => $query->where('is_published', 1)),
+                SelectFilter::make('status')
+                ->multiple()
+                    ->options([
+                        'draft' => 'Draft',
+                        'reviewing' => 'Reviewing',
+                        'published' => 'Published',
+                    ]),
                 Filter::make('created_at')
                     ->form([
                         DatePicker::make('from'),

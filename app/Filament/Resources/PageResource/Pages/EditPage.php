@@ -25,9 +25,12 @@ class EditPage extends EditRecord
 
     protected function getSavedNotification(): ?Notification
     {
+        $recipient = auth()->user();
+
         return Notification::make()
         ->success()
         ->title('Page Updated')
-        ->body('The page data has been saved successfully.');
+        ->body('The page data has been saved successfully.')
+        ->sendToDatabase($recipient);;
     }
 }
