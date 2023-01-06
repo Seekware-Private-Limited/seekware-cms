@@ -30,7 +30,7 @@ class EditPage extends EditRecord
         return Notification::make()
         ->success()
         ->title('Page Updated')
-        ->body('The page data has been saved successfully.')
+        ->body('The page data has been updated successfully.')
         ->sendToDatabase($recipient);;
     }
 }

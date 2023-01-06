@@ -6,6 +6,7 @@ use App\Filament\Resources\UserResource;
 use App\Models\User;
 use Filament\Pages\Actions;
 use Filament\Resources\Pages\EditRecord;
+use Filament\Notifications\Notification;
 
 class EditUser extends EditRecord
 {
@@ -27,5 +28,21 @@ class EditUser extends EditRecord
             }
         }
         return $data;
+    }
+
+    protected function getRedirectUrl(): string
+    {
+        return $this->getResource()::getUrl('index');
+    }
+
+    protected function getSavedNotification(): ?Notification
+    {
+        $recipient = auth()->user();
+
+        return Notification::make()
+            ->success()
+            ->title('User Information Updated')
+            ->body('The user data has been updated successfully.')
+            ->sendToDatabase($recipient);;
     }
 }
