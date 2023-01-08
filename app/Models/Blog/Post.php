@@ -37,6 +37,13 @@ class Post extends Model
         'category_id'
     ];
 
+    /**
+     * @var array<string, string>
+     */
+    protected $casts = [
+        'published_at' => 'date',
+    ];
+
     public function published(Builder $query)
     {
         return $query->whereNotNull('published_at');

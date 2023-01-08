@@ -31,4 +31,5 @@ class EditBlogCategory extends EditRecord
             ->title('Blog Category Updated')
             ->body('The Blog category data has been updated successfully.');
     }
+
 }

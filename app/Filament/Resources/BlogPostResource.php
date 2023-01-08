@@ -5,12 +5,13 @@ namespace App\Filament\Resources;
 use App\Filament\Resources\BlogPostResource\Pages;
 use App\Models\Blog\Post;
 use Filament\Forms;
-use Filament\Forms\Components\Card;
+use Illuminate\Database\Eloquent\Builder;
 use Filament\Resources\Form;
 use Filament\Resources\Resource;
 use Filament\Resources\Table;
 use Filament\Tables;
 use Illuminate\Support\Str;
+use Illuminate\Support\Carbon;
 
 class BlogPostResource extends Resource
 {
@@ -20,29 +21,10 @@ class BlogPostResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-rss';
 
+    protected static ?string $recordTitleAttribute = 'name';
+
     public static function form(Form $form): Form
     {
-        // return $form
-        //     ->schema([
-        //         Forms\Components\Group::make()
-        //         ->schema([
-        //             Card::make()
-        //                 ->schema([
-        //                     Forms\Components\TextInput::make('title')
-        //                         ->required()
-        //                         ->lazy()
-        //                         ->afterStateUpdated(fn (string $context, $state, callable $set) => $context === 'create' ? $set('slug', Str::slug($state)) : null),
-        //                     Forms\Components\TextInput::make('slug')
-        //                         ->required()
-        //                         ->unique(Post::class, 'slug', ignoreRecord: true),
-        //                     Forms\Components\RichEditor::make('content')->required(),
-        //                     Forms\Components\Select::make('category_id')->relationship('category', 'name')->required(),
-        //                     Forms\Components\FileUpload::make('featured_image')->image()->required(),
-        //                     Forms\Components\TagsInput::make('tags'),
-        //                     // Forms\Components\KeyValue::make('meta')
-        //                 ])->columns(2),
-        //         ])
-        //     ]);
 
         return $form
             ->schema([
@@ -56,18 +38,17 @@ class BlogPostResource extends Resource
                                     ->afterStateUpdated(fn (string $context, $state, callable $set) => $context === 'create' ? $set('slug', Str::slug($state)) : null),
 
                                 Forms\Components\TextInput::make('slug')
-                                    ->disabled()
                                     ->required()
                                     ->unique(Post::class, 'slug', ignoreRecord: true),
 
                                 Forms\Components\RichEditor::make('content')
-                                ->required()
+                                    ->required()
                                     ->columnSpan('full'),
 
                                 Forms\Components\Select::make('category_id')->relationship('category', 'name')->required(),
 
                                 Forms\Components\DatePicker::make('published_at')
-                                ->label('Published Date')->required(),
+                                    ->label('Published Date')->required(),
 
                                 Forms\Components\TagsInput::make('tags')->columnSpanFull(),
                             ])
@@ -87,12 +68,12 @@ class BlogPostResource extends Resource
                 Forms\Components\Card::make()
                     ->schema([
                         Forms\Components\Placeholder::make('created_at')
-                        ->label('Created at')
-                        ->content(fn (Post $record): ?string => $record->created_at?->diffForHumans()),
+                            ->label('Created at')
+                            ->content(fn (Post $record): ?string => $record->created_at?->diffForHumans()),
 
                         Forms\Components\Placeholder::make('updated_at')
-                        ->label('Last modified at')
-                        ->content(fn (Post $record): ?string => $record->updated_at?->diffForHumans()),
+                            ->label('Last modified at')
+                            ->content(fn (Post $record): ?string => $record->updated_at?->diffForHumans()),
                     ])
                     ->columnSpan(['lg' => 1])
                     ->hidden(fn (?Post $record) => $record === null),
@@ -110,10 +91,43 @@ class BlogPostResource extends Resource
                 Tables\Columns\TextColumn::make('id')->sortable(),
                 Tables\Columns\TextColumn::make('title')->sortable()->searchable(),
                 Tables\Columns\TextColumn::make('slug')->sortable()->searchable(),
+                Tables\Columns\BadgeColumn::make('status')
+                    ->getStateUsing(fn (Post $record): string => $record->published_at->isPast() ? 'Published' : 'Draft')
+                    ->colors([
+                        'success' => 'Published',
+                    ]),
                 Tables\Columns\TagsColumn::make('tags.name')->separator(',')
             ])
             ->filters([
-                //
+                Tables\Filters\Filter::make('published_at')
+                    ->form([
+                        Forms\Components\DatePicker::make('published_from'),
+                        Forms\Components\DatePicker::make('published_until'),
+                    ])
+                    ->query(function (Builder $query, array $data): Builder {
+                        return $query
+                            ->when(
+                                $data['published_from'],
+                                fn (Builder $query, $date): Builder => $query->whereDate('published_at', '>=', $date),
+                            )
+                            ->when(
+                                $data['published_until'],
+                                fn (Builder $query, $date): Builder => $query->whereDate('published_at', '<=', $date),
+                            );
+                    })
+                    ->indicateUsing(function (array $data): array {
+                        $indicators = [];
+
+                        if ($data['published_from'] ?? null) {
+                            $indicators['published_from'] = 'Published from ' . Carbon::parse($data['published_from'])->toFormattedDateString();
+                        }
+
+                        if ($data['published_until'] ?? null) {
+                            $indicators['published_until'] = 'Published until ' . Carbon::parse($data['published_until'])->toFormattedDateString();
+                        }
+
+                        return $indicators;
+                    })
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),
