@@ -23,7 +23,7 @@ class PageResource extends Resource
 {
     protected static ?string $model = Page::class;
     protected static ?string $recordTitleAttribute = 'title';
-    protected static ?string $navigationGroup = 'Menu';
+    protected static ?string $navigationGroup = 'Page & Layout';
     protected static ?string $navigationIcon = 'heroicon-o-collection';
 
     public static function form(Form $form): Form
@@ -61,19 +61,19 @@ class PageResource extends Resource
         return $table
             ->columns([
                 Tables\Columns\TextColumn::make('id')->sortable(),
-                Tables\Columns\TextColumn::make('title')->sortable(),
-                Tables\Columns\TextColumn::make('slug')->sortable(),
+                Tables\Columns\TextColumn::make('title')->sortable()->searchable(),
+                Tables\Columns\TextColumn::make('slug')->sortable()->searchable(),
                 Tables\Columns\IconColumn::make('is_published')->boolean()->sortable(),
             ])
             ->filters([
             Filter::make('is_published')->toggle()->query(fn (Builder $query): Builder => $query->where('is_published', 1)),
-                SelectFilter::make('status')
-                ->multiple()
-                    ->options([
-                        'draft' => 'Draft',
-                        'reviewing' => 'Reviewing',
-                        'published' => 'Published',
-                    ]),
+                // SelectFilter::make('status')
+                // ->multiple()
+                //     ->options([
+                //         'draft' => 'Draft',
+                //         'reviewing' => 'Reviewing',
+                //         'published' => 'Published',
+                //     ]),
                 Filter::make('created_at')
                     ->form([
                         DatePicker::make('from'),

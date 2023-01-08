@@ -1,15 +1,15 @@
 <?php
 
-namespace App\Filament\Resources\PageResource\Pages;
+namespace App\Filament\Resources\BlogTagResource\Pages;
 
-use App\Filament\Resources\PageResource;
+use App\Filament\Resources\BlogTagResource;
 use Filament\Pages\Actions;
 use Filament\Resources\Pages\EditRecord;
 use Filament\Notifications\Notification;
 
-class EditPage extends EditRecord
+class EditBlogTag extends EditRecord
 {
-    protected static string $resource = PageResource::class;
+    protected static string $resource = BlogTagResource::class;
 
     protected function getActions(): array
     {
@@ -25,9 +25,10 @@ class EditPage extends EditRecord
 
     protected function getSavedNotification(): ?Notification
     {
+
         return Notification::make()
-        ->success()
-        ->title('Page Updated')
-        ->body('The page data has been updated successfully.');
+            ->success()
+            ->title('Blog Tag Updated')
+            ->body('The Blog Tag has been updated successfully.');
     }
 }

@@ -18,9 +18,10 @@ class CreatePage extends CreateRecord
 
     protected function getCreatedNotification(): ?Notification
     {
+        $recipient = auth()->user();
         return Notification::make()
             ->success()
             ->title('Page Created')
-            ->body('New page has been created successfully.');
+            ->body('New page has been created successfully.')->sendToDatabase($recipient);
     }
 }
