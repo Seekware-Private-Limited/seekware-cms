@@ -21,7 +21,7 @@ class BlogPostResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-rss';
 
-    protected static ?string $recordTitleAttribute = 'name';
+    protected static ?string $recordTitleAttribute = 'title';
 
     public static function form(Form $form): Form
     {
@@ -44,13 +44,6 @@ class BlogPostResource extends Resource
                                 Forms\Components\RichEditor::make('content')
                                     ->required()
                                     ->columnSpan('full'),
-
-                                Forms\Components\Select::make('category_id')->relationship('category', 'name')->required(),
-
-                                Forms\Components\DatePicker::make('published_at')
-                                    ->label('Published Date')->required(),
-
-                                Forms\Components\TagsInput::make('tags')->columnSpanFull(),
                             ])
                             ->columns(2),
 
@@ -62,6 +55,12 @@ class BlogPostResource extends Resource
                                     ->required(),
                             ])
                             ->collapsible(),
+                        Forms\Components\Section::make('Meta Information')
+                            ->schema([
+                                Forms\Components\TextInput::make('meta_title')->columnSpanFull(),
+                                Forms\Components\TextInput::make('meta_description')->columnSpanFull(),
+                            ])
+                            ->collapsible(),
                     ])
                     ->columnSpan(['lg' => fn (?Post $record) => $record === null ? 3 : 2]),
 
@@ -70,10 +69,13 @@ class BlogPostResource extends Resource
                         Forms\Components\Placeholder::make('created_at')
                             ->label('Created at')
                             ->content(fn (Post $record): ?string => $record->created_at?->diffForHumans()),
-
                         Forms\Components\Placeholder::make('updated_at')
                             ->label('Last modified at')
                             ->content(fn (Post $record): ?string => $record->updated_at?->diffForHumans()),
+                        Forms\Components\Select::make('category_id')->relationship('category', 'name')->required(),
+                        Forms\Components\DatePicker::make('published_at')
+                            ->label('Published Date')->required(),
+                        Forms\Components\TagsInput::make('tags')->columnSpanFull(),
                     ])
                     ->columnSpan(['lg' => 1])
                     ->hidden(fn (?Post $record) => $record === null),

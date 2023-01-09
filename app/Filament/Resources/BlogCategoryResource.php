@@ -18,6 +18,8 @@ class BlogCategoryResource extends Resource
 
     protected static ?string $navigationGroup = 'Blogs';
 
+    protected static ?string $recordTitleAttribute = 'name';
+
     protected static ?string $navigationIcon = 'heroicon-o-newspaper';
 
     public static function form(Form $form): Form
