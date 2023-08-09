@@ -4,6 +4,7 @@ namespace App\Filament\Widgets;
 
 use Filament\Widgets\StatsOverviewWidget as BaseWidget;
 use Filament\Widgets\StatsOverviewWidget\Card;
+use BezhanSalleh\FilamentGoogleAnalytics\Widgets;
 
 class DashboardStatsOverview extends BaseWidget
 {
@@ -22,6 +23,24 @@ class DashboardStatsOverview extends BaseWidget
             Card::make('Average time on page', '3:12')
                 ->description('3% increase')
                 ->descriptionIcon('heroicon-s-trending-up'),
+        ];
+    }
+
+    protected function getHeaderWidgets(): array
+    {
+        return [
+            Widgets\PageViewsWidget::class,
+            Widgets\VisitorsWidget::class,
+            Widgets\ActiveUsersOneDayWidget::class,
+            Widgets\ActiveUsersSevenDayWidget::class,
+            Widgets\ActiveUsersFourteenDayWidget::class,
+            Widgets\ActiveUsersTwentyEightDayWidget::class,
+            Widgets\SessionsWidget::class,
+            Widgets\SessionsDurationWidget::class,
+            Widgets\SessionsByCountryWidget::class,
+            Widgets\SessionsByDeviceWidget::class,
+            Widgets\MostVisitedPagesWidget::class,
+            Widgets\TopReferrersListWidget::class,
         ];
     }
 }
