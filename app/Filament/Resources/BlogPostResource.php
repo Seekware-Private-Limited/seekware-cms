@@ -61,6 +61,12 @@ class BlogPostResource extends Resource
                                 Forms\Components\TextInput::make('meta_description')->columnSpanFull(),
                             ])
                             ->collapsible(),
+                        Forms\Components\Section::make('Additional Information')
+                            ->schema([
+                                Forms\Components\TextInput::make('meta_title')->columnSpanFull(),
+                                Forms\Components\TextInput::make('meta_description')->columnSpanFull(),
+                            ])
+                            ->collapsible(),
                     ])
                     ->columnSpan(['lg' => fn (?Post $record) => $record === null ? 3 : 2]),
 

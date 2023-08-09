@@ -1,0 +1,13 @@
+{
+  "type": "service_account",
+  "project_id": "seekware-internal",
+  "private_key_id": "908598fbbb05666ff2a4d6ab0a79bf8f886b8af3",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvgIBADANBgkqhkiG9w0BAQEFAASCBKgwggSkAgEAAoIBAQDUwZjPzUbgEBL/\nIAhbSrJYya8T6S9N5yVqUyA+kXsUwytR4GDJGjSPmg8tBV9KfMt/NaT3mIyeSP3j\ntlEKA9yiueEnpltVUH4xcxPe0/lELY7aJK+l0KFaq1/lzLLYLO9OM0fGOioSTw3x\n6CAluQgNmrV/F9NSKQ1PmBeWrc2VaJAPQsDj1K8SL1sDuFNITXaYBixufGtub0fS\n0ot7LiCIYYUuwAkk6lKFq4aGUokpOh+qumOutr1I35RlE3kh6xKAcWd9sy3OXFjO\na8TLUEaMpGm7STjW572jLPjVKBga99p7BE7SysVyRo7FIK4h4vbBQEyjt692fZXZ\ncENnCu0PAgMBAAECggEAGrUu3K81PX1nFRXNVsB6wQCYdNRp9sqUfNNwkcorfEC/\n2GhlXflnLbu2Of2Zp70gwphWXCqPRHN/Q62oYKx5bwgMhrCweHZBUS3UCb3sZa2e\naC4Ayrz09G/c+vkGXnLNm7B+SxkUHPZFlt9/4ZxnsWWBcTHpej/jBuHd3DF3RFEA\nJ0+3ThUZ28kkN1K54TLerm+S4SsUGyQxoA/tazLm1R2m9xmqveKF73ce2O8Ly2AO\nOy/gwPWX/A7lluVWtep0CQ43neuwWAYT/KBCZRlTTpdk7B0VSnGo6AX9UBVYdyaC\ngINNp18ZAveNpJJA4qRBp5M49HSfoYeF+XnYpciL4QKBgQD/cSyJ1yT5tbQf9VA0\ni7szW9CNPOVejXxkkSSLAT9JGOcNKJR2fJmTzxxlkuXDozrI1RH4NUGIpi3JiwYT\n3nHqFNluxNfPy10A+GXtIKx8yxtDSmTWpGuG+tZcqYIKlnhkqfidJ8BuMkiIrozK\nV5cs582Umi4YBO894u8xKEjQsQKBgQDVOI5OxFuR3DeFGbQ5334SR09wbsxwSnUW\nt1jhuo2Ziwh0FHbhjZvWBSi2d3U2dxjWGIZpJU53dGVhPzdSjeZxR9UQhbjZphGb\nxhVOlbTrxP/AnDT207RGiYEq7us1fNAQb7+rfGdWeFPjS6Kv89U5KQyjcqIECY7b\nXshzL7EJvwKBgCLuVQrcct/66xDbuQYWfZj+WzyVMUCG1JXkCz0/BGp4j1ALVpIF\nY/MEhXuWZPkl3yoLiROKJNYM84H2EvSwnJ9IDpvJK0HtK2Cwly+gIjZGiAnhqHx5\nq4Kf1qSBQZk1Dm2lmKvU/cmT8rtOM06QP8oSQNirZNZABn9OAyuTuLFhAoGBAL0F\nlUsI0jDdrC6H2flQQyCLLUZ8QyrtJx4LTnVWf791vPnDRpywgE1cZ3pTLospS9BJ\nD6dZFlXZzyJF+5JpD7ivOJicI4J3sbaKBUuUdj5pd11WXbHPfkrmDad1BPl2+7EG\nkEHDWI0UwTGIVOJtZEJ3PKgNsMmpe4bIYSWUSvtbAoGBAP31TZqdon+QVEbvGDSC\n7kQ83NoAUPb+cskPzBYcHzVDhcss+SWbAX3YL9OIsT1a2Tq/5ud4uOkigCHxpkA9\nN83OPPykutXZeiDXioCxBFMGufMbbw1vzEr3wf9Dfu8Lz1pnxJ0lUewuw8H5r4SZ\nBXD9l4Y4wrnFX4smRBPz7LYL\n-----END PRIVATE KEY-----\n",
+  "client_email": "seekware-cms-dashboard@seekware-internal.iam.gserviceaccount.com",
+  "client_id": "106224565611072300557",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/seekware-cms-dashboard%40seekware-internal.iam.gserviceaccount.com",
+  "universe_domain": "googleapis.com"
+}
