@@ -41,6 +41,9 @@ class BlogPostResource extends Resource
                                     ->required()
                                     ->unique(Post::class, 'slug', ignoreRecord: true),
 
+                                Forms\Components\Select::make('category_id')->relationship('category', 'name')->required()
+                                    ->columnSpan('full')->hidden(fn (?Post $record) => $record !== null),
+
                                 Forms\Components\RichEditor::make('content')
                                     ->required()
                                     ->columnSpan('full'),
@@ -51,7 +54,9 @@ class BlogPostResource extends Resource
                             ->schema([
                                 Forms\Components\FileUpload::make('featured_image')
                                     ->label('Featured Image')
-                                    ->image()
+                                    ->image()->disk('s3')
+                                    ->directory('assets')
+                                    ->visibility('private')
                                     ->required(),
                             ])
                             ->collapsible(),
@@ -63,10 +68,11 @@ class BlogPostResource extends Resource
                             ->collapsible(),
                         Forms\Components\Section::make('Additional Information')
                             ->schema([
-                                Forms\Components\TextInput::make('meta_title')->columnSpanFull(),
-                                Forms\Components\TextInput::make('meta_description')->columnSpanFull(),
+                                Forms\Components\TagsInput::make('tags')->columnSpanFull(),
+                                Forms\Components\DateTimePicker::make('published_at')->columnSpanFull(),
+                                Forms\Components\Select::make('author_id')->relationship('author', 'name')->columnSpanFull(),
                             ])
-                            ->collapsible(),
+                            ->collapsible()->hidden(fn (?Post $record) => $record !== null),
                     ])
                     ->columnSpan(['lg' => fn (?Post $record) => $record === null ? 3 : 2]),
 
@@ -79,6 +85,7 @@ class BlogPostResource extends Resource
                             ->label('Last modified at')
                             ->content(fn (Post $record): ?string => $record->updated_at?->diffForHumans()),
                         Forms\Components\Select::make('category_id')->relationship('category', 'name')->required(),
+                        Forms\Components\Select::make('author_id')->relationship('author', 'name')->columnSpanFull(),
                         Forms\Components\DatePicker::make('published_at')
                             ->label('Published Date')->required(),
                         Forms\Components\TagsInput::make('tags')->columnSpanFull(),
@@ -97,10 +104,19 @@ class BlogPostResource extends Resource
         return $table
             ->columns([
                 Tables\Columns\TextColumn::make('id')->sortable(),
-                Tables\Columns\TextColumn::make('title')->sortable()->searchable(),
-                Tables\Columns\TextColumn::make('slug')->sortable()->searchable(),
+                Tables\Columns\TextColumn::make('title')->sortable()->searchable()->limit(30)->tooltip(function (Tables\Columns\TextColumn $column): ?string {
+                    $state = $column->getState();
+
+                    if (strlen($state) <= $column->getLimit()) {
+                        return null;
+                    }
+
+                    // Only render the tooltip if the column contents exceeds the length limit.
+                    return $state;
+                }),
+                Tables\Columns\TextColumn::make('category.name')->sortable()->searchable(),
                 Tables\Columns\BadgeColumn::make('status')
-                    ->getStateUsing(fn (Post $record): string => $record->published_at->isPast() ? 'Published' : 'Draft')
+                    ->getStateUsing(fn (Post $record): string => $record->published_at && $record->published_at->isPast() ? 'Published' : 'Draft')
                     ->colors([
                         'success' => 'Published',
                     ]),

@@ -15,7 +15,7 @@ class CreateBlogPost extends CreateRecord
 
     protected function mutateFormDataBeforeCreate(array $data): array
     {
-        $data['author_id'] = auth()->id();
+        // $data['author_id'] = auth()->id();
 
         $data['excerpt'] =  Str::words($data['content']);
 
