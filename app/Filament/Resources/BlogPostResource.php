@@ -55,8 +55,8 @@ class BlogPostResource extends Resource
                                 Forms\Components\FileUpload::make('featured_image')
                                     ->label('Featured Image')
                                     ->image()->disk('s3')
-                                    ->directory('assets')
-                                    ->visibility('private')
+                                    ->directory('assets/images')
+                                    ->visibility('public')
                                     ->required(),
                             ])
                             ->collapsible(),
