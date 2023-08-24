@@ -34,7 +34,8 @@ class Post extends Model
         'meta_description',
         'published_at',
         'author_id',
-        'category_id'
+        'category_id',
+        'highlight_text'
     ];
 
     /**

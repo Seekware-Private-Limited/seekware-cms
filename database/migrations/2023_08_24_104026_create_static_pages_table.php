@@ -13,16 +13,12 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('blog_posts', function (Blueprint $table) {
+        Schema::create('static_pages', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('author_id')->constrained()->on('users')->cascadeOnDelete();
-            $table->foreignId('category_id')->nullable()->constrained()->on('blog_categories')->nullOnDelete();
             $table->string('title');
             $table->string('slug')->unique();
-            $table->text('excerpt');
-            $table->string('featured_image')->nullable();
+            $table->string('link_title')->nullable();
             $table->longText('content');
-            $table->longText('highlight_text');
             $table->longText('meta_title')->nullable();
             $table->longText('meta_description')->nullable();
             $table->date('published_at')->nullable();
@@ -37,6 +33,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('blog_posts');
+        Schema::dropIfExists('static_pages');
     }
 };

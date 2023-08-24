@@ -27,6 +27,7 @@ return new class extends Migration
             $table->text('excerpt')->nullable();
             $table->string('featured_image')->nullable();
             $table->longText('description');
+            $table->text('url')->nullable();
             $table->longText('meta_title')->nullable();
             $table->longText('meta_description')->nullable();
             $table->date('published_at')->nullable();
