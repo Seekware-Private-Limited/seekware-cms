@@ -25,7 +25,7 @@ class ServicePageResource extends Resource
     protected static ?string $recordTitleAttribute = 'title';
     protected static ?string $modelLabel = 'Service Page';
     protected static ?string $navigationGroup = 'Page & Layout';
-    protected static ?string $navigationIcon = 'heroicon-o-collection';
+    protected static ?string $navigationIcon = 'heroicon-o-server';
 
     public static function form(Form $form): Form
     {

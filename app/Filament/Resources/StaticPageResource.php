@@ -25,36 +25,36 @@ class StaticPageResource extends Resource
 
     protected static ?string $navigationGroup = 'Page & Layout';
 
-    protected static ?string $navigationIcon = 'heroicon-o-collection';
+    protected static ?string $navigationIcon = 'heroicon-o-bookmark';
 
     public static function form(Form $form): Form
     {
         return $form
             ->schema([
-            Card::make()
-                ->schema([
-                    Forms\Components\TextInput::make('title')
-                        ->afterStateUpdated(function (Closure $get, Closure $set, ?string $state) {
-                            if (!$get('is_slug_changed_manually') && filled($state)) {
-                                $set(
-                                    'slug',
-                                    Str::slug($state)
-                                );
-                            }
-                        })
-                        ->reactive()
-                        ->required(),
-                    Forms\Components\TextInput::make('slug')
-                        ->afterStateUpdated(function (Closure $set) {
-                            $set('is_slug_changed_manually', true);
-                        })
-                        ->required()->unique(ignoreRecord: true),
-                    Forms\Components\TextInput::make('link_title')->required(),
-                    TinyEditor::make('content')->required()->required(),
-                    Forms\Components\TextInput::make('meta_title')->required(),
-                    Forms\Components\TextInput::make('meta_description')->required(),
-                    Forms\Components\DateTimePicker::make('published_at')->columnSpanFull(),
-                ])
+                Card::make()
+                    ->schema([
+                        Forms\Components\TextInput::make('title')
+                            ->afterStateUpdated(function (Closure $get, Closure $set, ?string $state) {
+                                if (!$get('is_slug_changed_manually') && filled($state)) {
+                                    $set(
+                                        'slug',
+                                        Str::slug($state)
+                                    );
+                                }
+                            })
+                            ->reactive()
+                            ->required(),
+                        Forms\Components\TextInput::make('slug')
+                            ->afterStateUpdated(function (Closure $set) {
+                                $set('is_slug_changed_manually', true);
+                            })
+                            ->required()->unique(ignoreRecord: true),
+                        Forms\Components\TextInput::make('link_title')->required(),
+                        TinyEditor::make('content')->required()->required(),
+                        Forms\Components\TextInput::make('meta_title')->required(),
+                        Forms\Components\TextInput::make('meta_description')->required(),
+                        Forms\Components\DateTimePicker::make('published_at')->columnSpanFull(),
+                    ])
             ]);
     }
 
@@ -72,35 +72,35 @@ class StaticPageResource extends Resource
                     ]),
             ])
             ->filters([
-            Tables\Filters\Filter::make('published_at')
-                ->form([
-                    Forms\Components\DatePicker::make('published_from'),
-                    Forms\Components\DatePicker::make('published_until'),
-                ])
-                ->query(function (Builder $query, array $data): Builder {
-                    return $query
-                        ->when(
-                            $data['published_from'],
-                            fn (Builder $query, $date): Builder => $query->whereDate('published_at', '>=', $date),
-                        )
-                        ->when(
-                            $data['published_until'],
-                            fn (Builder $query, $date): Builder => $query->whereDate('published_at', '<=', $date),
-                        );
-                })
-                ->indicateUsing(function (array $data): array {
-                    $indicators = [];
+                Tables\Filters\Filter::make('published_at')
+                    ->form([
+                        Forms\Components\DatePicker::make('published_from'),
+                        Forms\Components\DatePicker::make('published_until'),
+                    ])
+                    ->query(function (Builder $query, array $data): Builder {
+                        return $query
+                            ->when(
+                                $data['published_from'],
+                                fn (Builder $query, $date): Builder => $query->whereDate('published_at', '>=', $date),
+                            )
+                            ->when(
+                                $data['published_until'],
+                                fn (Builder $query, $date): Builder => $query->whereDate('published_at', '<=', $date),
+                            );
+                    })
+                    ->indicateUsing(function (array $data): array {
+                        $indicators = [];
 
-                    if ($data['published_from'] ?? null) {
-                        $indicators['published_from'] = 'Published from ' . Carbon::parse($data['published_from'])->toFormattedDateString();
-                    }
+                        if ($data['published_from'] ?? null) {
+                            $indicators['published_from'] = 'Published from ' . Carbon::parse($data['published_from'])->toFormattedDateString();
+                        }
 
-                    if ($data['published_until'] ?? null) {
-                        $indicators['published_until'] = 'Published until ' . Carbon::parse($data['published_until'])->toFormattedDateString();
-                    }
+                        if ($data['published_until'] ?? null) {
+                            $indicators['published_until'] = 'Published until ' . Carbon::parse($data['published_until'])->toFormattedDateString();
+                        }
 
-                    return $indicators;
-                })
+                        return $indicators;
+                    })
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),
