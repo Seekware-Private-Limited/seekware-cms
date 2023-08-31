@@ -60,46 +60,49 @@ class CareerPostResource extends Resource
                                     ])->required(),
 
                                 Forms\Components\TextInput::make('experience')
-                                ->required(),
+                                    ->required(),
 
                                 Forms\Components\TextInput::make('salary')
-                                ->required(),
+                                    ->required(),
+
+                                Forms\Components\TextInput::make('url')
+                                    ->required(),
 
                                 Forms\Components\RichEditor::make('description')->label('Job Description')
-                                ->required()
+                                    ->required()
                                     ->columnSpan('full'),
 
                                 Forms\Components\RichEditor::make('responsibilities')->label('Job Responsibilities')
-                                ->required()
+                                    ->required()
                                     ->columnSpan('full'),
 
                                 Forms\Components\RichEditor::make('skill_desc')->label('Job Skills')
-                                ->required()
+                                    ->required()
                                     ->columnSpan('full'),
                             ])
                             ->columns(2),
 
                         Forms\Components\Section::make('Featured Image')
-                        ->schema([
-                            Forms\Components\FileUpload::make('featured_image')
-                            ->label('Featured Image')
-                            ->image()->disk('s3')
-                                ->directory('assets/images')
-                                ->visibility('public'),
-                        ])
+                            ->schema([
+                                Forms\Components\FileUpload::make('featured_image')
+                                    ->label('Featured Image')
+                                    ->image()->disk('s3')
+                                    ->directory('assets/images')
+                                    ->visibility('public'),
+                            ])
                             ->collapsible(),
                         Forms\Components\Section::make('Meta Information')
-                        ->schema([
-                            Forms\Components\TextInput::make('meta_title')->columnSpanFull(),
-                            Forms\Components\TextInput::make('meta_description')->columnSpanFull(),
-                        ])
+                            ->schema([
+                                Forms\Components\TextInput::make('meta_title')->columnSpanFull(),
+                                Forms\Components\TextInput::make('meta_description')->columnSpanFull(),
+                            ])
                             ->collapsible(),
                         Forms\Components\Section::make('Additional Information')
-                        ->schema([
-                            Forms\Components\TagsInput::make('skills')->placeholder('New Skill')->columnSpanFull(),
-                            Forms\Components\DateTimePicker::make('published_at')->columnSpanFull(),
-                            Forms\Components\Select::make('author_id')->relationship('author', 'name')->columnSpanFull(),
-                        ])
+                            ->schema([
+                                Forms\Components\TagsInput::make('skills')->placeholder('New Skill')->columnSpanFull(),
+                                Forms\Components\DateTimePicker::make('published_at')->columnSpanFull(),
+                                Forms\Components\Select::make('author_id')->relationship('author', 'name')->columnSpanFull(),
+                            ])
                             ->collapsible()->hidden(fn (?Post $record) => $record !== null),
                     ])
                     ->columnSpan(['lg' => fn (?Post $record) => $record === null ? 3 : 2]),
@@ -107,14 +110,14 @@ class CareerPostResource extends Resource
                 Forms\Components\Card::make()
                     ->schema([
                         Forms\Components\Placeholder::make('created_at')
-                        ->label('Created at')
-                        ->content(fn (Post $record): ?string => $record->created_at?->diffForHumans()),
+                            ->label('Created at')
+                            ->content(fn (Post $record): ?string => $record->created_at?->diffForHumans()),
                         Forms\Components\Placeholder::make('updated_at')
-                        ->label('Last modified at')
-                        ->content(fn (Post $record): ?string => $record->updated_at?->diffForHumans()),
+                            ->label('Last modified at')
+                            ->content(fn (Post $record): ?string => $record->updated_at?->diffForHumans()),
                         Forms\Components\Select::make('author_id')->relationship('author', 'name')->columnSpanFull(),
                         Forms\Components\DatePicker::make('published_at')
-                        ->label('Published Date')->required(),
+                            ->label('Published Date')->required(),
                         Forms\Components\TagsInput::make('skills')->columnSpanFull(),
                     ])
                     ->columnSpan(['lg' => 1])
@@ -151,10 +154,10 @@ class CareerPostResource extends Resource
             ])
             ->filters([
                 Tables\Filters\Filter::make('published_at')
-                ->form([
-                    Forms\Components\DatePicker::make('published_from'),
-                    Forms\Components\DatePicker::make('published_until'),
-                ])
+                    ->form([
+                        Forms\Components\DatePicker::make('published_from'),
+                        Forms\Components\DatePicker::make('published_until'),
+                    ])
                     ->query(function (Builder $query, array $data): Builder {
                         return $query
                             ->when(

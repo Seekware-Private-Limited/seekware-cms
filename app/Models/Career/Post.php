@@ -41,6 +41,7 @@ class Post extends Model
         'responsibilities',
         'skill_desc',
         'experience',
+        'url',
         'salary'
     ];
 
