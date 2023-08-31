@@ -52,7 +52,7 @@ class ServicePageResource extends Resource
                         Forms\Components\TextInput::make('service_heading')->required(),
                         Forms\Components\TextInput::make('stats_title')->required(),
                         Forms\Components\DateTimePicker::make('published_at'),
-                        Forms\Components\Textarea::make('service_description')->required(),
+                        Forms\Components\RichEditor::make('service_description')->required(),
                         Forms\Components\Textarea::make('cta_text')->required(),
                         Forms\Components\Textarea::make('cta_feature_text')->required(),
                         Forms\Components\Textarea::make('approach_feature_text')->required(),
