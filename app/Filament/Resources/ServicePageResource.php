@@ -15,7 +15,6 @@ use Filament\Tables;
 use Illuminate\Database\Eloquent\Builder;
 use Filament\Forms\Components\Card;
 use Illuminate\Support\Str;
-use Mohamedsabil83\FilamentFormsTinyeditor\Components\TinyEditor;
 use Filament\Forms\Components\Repeater;
 
 class ServicePageResource extends Resource
@@ -64,7 +63,7 @@ class ServicePageResource extends Resource
                             ->visibility('public')->required()->minSize(1)
                             ->maxSize(500)->imagePreviewHeight('100'),
                         Forms\Components\FileUpload::make('featured_image')
-                            ->label('Featured Image')
+                            ->label('Meta Image')
                             ->image()->disk('s3')
                             ->directory('assets/images')
                             ->visibility('public')->required()->minSize(1)
@@ -79,13 +78,14 @@ class ServicePageResource extends Resource
                             ->relationship()
                             ->schema([
                                 Forms\Components\TextInput::make('title')->required(),
+                                Forms\Components\TextInput::make('subtitle')->required(),
                                 Forms\Components\FileUpload::make('image')
                                     ->label('Featured Image')
                                     ->image()->disk('s3')
                                     ->directory('assets/images')
                                     ->visibility('public')->required()->minSize(1)
                                     ->maxSize(300)->imagePreviewHeight('100'),
-                                Forms\Components\Textarea::make('description')->required(),
+                                Forms\Components\RichEditor::make('description')->required(),
                             ])->collapsible(),
                         Repeater::make('advantages')
                             ->relationship()
@@ -97,7 +97,7 @@ class ServicePageResource extends Resource
                                     ->directory('assets/images')
                                     ->visibility('public')->required()->minSize(1)
                                     ->maxSize(300)->imagePreviewHeight('100'),
-                                Forms\Components\Textarea::make('description')->required(),
+                                Forms\Components\RichEditor::make('description')->required(),
                             ])->collapsible(),
                         Forms\Components\TextInput::make('meta_title')->required(),
                         Forms\Components\TextInput::make('meta_description')->required(),
