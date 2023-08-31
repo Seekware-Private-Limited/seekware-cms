@@ -26,6 +26,7 @@ class Feature extends Model
         'service_post_id',
         'description',
         'image',
+        'subtitle',
     ];
 
     /**

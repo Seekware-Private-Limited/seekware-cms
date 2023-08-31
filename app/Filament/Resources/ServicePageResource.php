@@ -49,6 +49,7 @@ class ServicePageResource extends Resource
                             })
                             ->required()->unique(ignoreRecord: true),
                         Forms\Components\TextInput::make('subtitle')->required(),
+                        Forms\Components\TextInput::make('menu_title')->required(),
                         Forms\Components\TextInput::make('service_heading')->required(),
                         Forms\Components\TextInput::make('stats_title')->required(),
                         Forms\Components\DateTimePicker::make('published_at'),

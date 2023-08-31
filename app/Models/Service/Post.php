@@ -41,6 +41,7 @@ class Post extends Model
         'stats_title',
         'cta_feature_text',
         'approach_feature_text',
+        'menu_title'
     ];
 
     /**
