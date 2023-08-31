@@ -61,19 +61,19 @@ class ServicePageResource extends Resource
                             ->label('Background Image')
                             ->image()->disk('s3')
                             ->directory('assets/images')
-                            ->visibility('public')->required()->minSize(10)
+                            ->visibility('public')->required()->minSize(1)
                             ->maxSize(500)->imagePreviewHeight('100'),
                         Forms\Components\FileUpload::make('featured_image')
                             ->label('Featured Image')
                             ->image()->disk('s3')
                             ->directory('assets/images')
-                            ->visibility('public')->required()->minSize(10)
+                            ->visibility('public')->required()->minSize(1)
                             ->maxSize(500)->imagePreviewHeight('100'),
                         Forms\Components\FileUpload::make('service_image')
                             ->label('Service Image')
                             ->image()->disk('s3')
                             ->directory('assets/images')
-                            ->visibility('public')->required()->minSize(10)
+                            ->visibility('public')->required()->minSize(1)
                             ->maxSize(500)->imagePreviewHeight('100')->columnSpanFull(),
                         Repeater::make('features')
                             ->relationship()
@@ -83,7 +83,7 @@ class ServicePageResource extends Resource
                                     ->label('Featured Image')
                                     ->image()->disk('s3')
                                     ->directory('assets/images')
-                                    ->visibility('public')->required()->minSize(10)
+                                    ->visibility('public')->required()->minSize(1)
                                     ->maxSize(300)->imagePreviewHeight('100'),
                                 Forms\Components\Textarea::make('description')->required(),
                             ])->collapsible(),
@@ -95,7 +95,7 @@ class ServicePageResource extends Resource
                                     ->label('Featured Image')
                                     ->image()->disk('s3')
                                     ->directory('assets/images')
-                                    ->visibility('public')->required()->minSize(10)
+                                    ->visibility('public')->required()->minSize(1)
                                     ->maxSize(300)->imagePreviewHeight('100'),
                                 Forms\Components\Textarea::make('description')->required(),
                             ])->collapsible(),
