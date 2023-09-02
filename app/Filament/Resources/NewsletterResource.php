@@ -21,7 +21,7 @@ class NewsletterResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-at-symbol';
 
-    protected static ?string $recordTitleAttribute = 'title';
+    protected static ?string $recordTitleAttribute = 'email';
 
     public static function form(Form $form): Form
     {

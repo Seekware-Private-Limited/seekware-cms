@@ -18,7 +18,7 @@ class ContactResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-inbox';
 
-    protected static ?string $recordTitleAttribute = 'title';
+    protected static ?string $recordTitleAttribute = 'email';
 
     public static function form(Form $form): Form
     {
