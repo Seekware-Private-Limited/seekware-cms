@@ -20,7 +20,7 @@ class FaqCategoryResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-view-list';
 
-    protected static ?string $recordTitleAttribute = 'title';
+    protected static ?string $recordTitleAttribute = 'name';
 
     public static function form(Form $form): Form
     {
