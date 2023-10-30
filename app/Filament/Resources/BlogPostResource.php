@@ -134,7 +134,7 @@ class BlogPostResource extends Resource
                         return $query
                             ->when(
                                 $data['published_from'],
-                                fn (Builder $query, $date): Builder => $query->whereDate('published_at', '>=', $date),
+                                fn (Builder $query, $date): Builder => $query->whereDate('c', '>=', $date),
                             )
                             ->when(
                                 $data['published_until'],
@@ -161,7 +161,7 @@ class BlogPostResource extends Resource
             ])
             ->bulkActions([
                 Tables\Actions\DeleteBulkAction::make(),
-            ]);
+            ])->defaultSort('published_at');
     }
 
     public static function getRelations(): array
