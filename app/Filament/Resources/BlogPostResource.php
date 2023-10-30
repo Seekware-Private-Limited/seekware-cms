@@ -161,7 +161,7 @@ class BlogPostResource extends Resource
             ])
             ->bulkActions([
                 Tables\Actions\DeleteBulkAction::make(),
-            ])->defaultSort('published_at');
+            ])->defaultSort('published_at', 'desc');
     }
 
     public static function getRelations(): array
