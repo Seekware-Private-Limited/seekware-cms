@@ -36,6 +36,14 @@ class ContactResource extends Resource
                     ->required(),
                 Forms\Components\Textarea::make('message')
                     ->required()->columnSpan('full'),
+                Forms\Components\Select::make('status')->options([
+                    'Pending' => 'Pending',
+                    'In Progress' => 'In Progress',
+                    'Completed' => 'Completed',
+                    'Spam' => 'Spam',
+                    'Rejected' => 'Rejected',
+                ])
+                    ->required()->columnSpan('full'),
             ])->columns(2)
             ]);
     }
@@ -49,6 +57,7 @@ class ContactResource extends Resource
                 Tables\Columns\TextColumn::make('email')->sortable()->searchable(),
                 Tables\Columns\TextColumn::make('service')->sortable()->searchable(),
                 Tables\Columns\TextColumn::make('phone')->sortable()->searchable(),
+                Tables\Columns\TextColumn::make('status')->sortable()->searchable(),
                 Tables\Columns\TextColumn::make('created_at')->dateTime()->sortable()->searchable(),
             ])
             ->filters([
@@ -56,6 +65,7 @@ class ContactResource extends Resource
             ])
             ->actions([
                 Tables\Actions\ViewAction::make(),
+                Tables\Actions\EditAction::make(),
             ])
             ->bulkActions([
                 Tables\Actions\DeleteBulkAction::make(),

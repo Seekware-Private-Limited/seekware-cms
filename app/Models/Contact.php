@@ -20,6 +20,7 @@ class Contact extends Model
         'email',
         'phone',
         'service',
-        'message'
+        'message',
+        'status'
     ];
 }
