@@ -49,6 +49,7 @@ class ContactResource extends Resource
                 Tables\Columns\TextColumn::make('email')->sortable()->searchable(),
                 Tables\Columns\TextColumn::make('service')->sortable()->searchable(),
                 Tables\Columns\TextColumn::make('phone')->sortable()->searchable(),
+                Tables\Columns\TextColumn::make('created_at')->dateTime()->sortable()->searchable(),
             ])
             ->filters([
                 //
@@ -58,7 +59,7 @@ class ContactResource extends Resource
             ])
             ->bulkActions([
                 Tables\Actions\DeleteBulkAction::make(),
-            ]);
+            ])->defaultSort('created_at', 'desc');
     }
 
     public static function getRelations(): array
